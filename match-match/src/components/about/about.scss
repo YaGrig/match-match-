@@ -1,0 +1,23 @@
+@import url(../../styles.scss);
+.about {
+  padding-top: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 802px;
+}
+.aboutPage {
+  position: absolute;
+  left: 25%;
+  top: 10%;
+  width: 55%;
+  height: 75%;
+  padding: 2%;
+  background-image: url(../../../public/images/pages/Untitled.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.image {
+  height: 100%;
+  width: 100%;
+}

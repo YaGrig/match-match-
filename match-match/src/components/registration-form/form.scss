@@ -1,0 +1,71 @@
+@import url(../../styles.scss);
+.form {
+  display: flex;
+justify-content: center;
+align-items: center;
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  height: 220vh;
+  width: 250vh;
+  background: rgba(0, 0, 0, 0.25);
+}
+.foorm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fff;
+  z-index: 100;
+  position: absolute;
+  top: 55%;
+  left: 25%;
+  height: 25%;
+  width: 35%;
+  padding: 3%;
+}
+.form-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 50%;
+  width: 100%;
+}
+.inputs{
+  width: 50%;
+  height: 100%;
+  color: black;
+}
+.input-element{
+  width: 100%;
+  height: 10%;
+}
+.header-form{
+  color: black;
+  font-size: 20px;
+  width: 100%;
+  padding: 5%;
+  height: 5%;
+}
+.input-wrong{
+  background-color: red;
+}
+.input-right{
+  background-color: green;
+}
+.input-fname:hover:after {
+  content: attr(data-title);
+  position: absolute;
+  left: 90%; top: 50%;
+  z-index: 1;
+  background: #ffffcc;
+  font-size: 11px;
+  padding: 5px 10px;
+  border: 1px solid #000;
+  box-shadow: 5px 5px 8px 0px rgba(119, 119, 119, 0.64);
+ }
+.buttons{
+  display: flex;
+  width: 20%;
+  justify-content: space-between;
+}

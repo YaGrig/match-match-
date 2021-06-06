@@ -1,0 +1,12 @@
+.game{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.wrong:after{
+  content: '';
+  height: 100%;
+  width: 100%;
+  background-color: red;
+}

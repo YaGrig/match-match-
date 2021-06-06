@@ -2,8 +2,24 @@ import { v4 as uuidv4 } from 'uuid';
 import { UserRepository } from './user-repository';
 import { User } from '../../models/user';
 
+export interface UserData {
+  firstname:string;
+
+  lastname:string;
+
+  email:string;
+
+  score:number;
+
+  id?:string;
+
+  diff:number;
+
+  card:number;
+}
+
 const userRepository = new UserRepository();
-const currentUserArray: Array<object> = [];
+const currentUserArray: Array<User> = [];
 
 export class UserService {
   public currentUser: User | null = null;
@@ -12,10 +28,10 @@ export class UserService {
     firstname = '',
     lastname = '',
     email = '',
-    id: any = uuidv4(),
+    id = uuidv4() as unknown as number,
     diff = 0,
     card = 0,
-  ):Promise<object> {
+  ): Promise<User> {
     const user = await userRepository.create(
       firstname,
       lastname,
@@ -29,14 +45,14 @@ export class UserService {
     return this.currentUser;
   }
 
-  async getTopPlayers(): Promise<any> {
+  async getTopPlayers(): Promise<Array<UserData>> {
     const result = await userRepository.GetAllPlayers();
     return result;
   }
 
   updateUserScore(
     score: number,
-    userId: any = Object.values(currentUserArray[0])[1],
+    userId: number = Object.values(currentUserArray[0])[1],
   ): void {
     const result = userRepository.updateUserScore(score, userId);
     return result;
@@ -44,30 +60,29 @@ export class UserService {
 
   async updateUserDiff(
     diff: number,
-    userId: any = Object.values(currentUserArray[0])[1],
-  ) {
-    const result = await userRepository.updateUserDiff(diff, userId);
-    return result;
+    userId: number = Object.values(currentUserArray[0])[1],
+  ):Promise<void> {
+    await userRepository.updateUserDiff(diff, userId);
   }
 
   async getUserDiff(
-    userId: any = Object.values(currentUserArray[0])[1],
+    userId: number = Object.values(currentUserArray[0])[1],
   ): Promise<number> {
-    const result = await userRepository.getUserDiff(userId);
+    const result = await userRepository.getUserDiff(String(userId));
     return result;
   }
 
   async updateUserCards(
     card: number,
-    userId: any = Object.values(currentUserArray[0])[1],
+    userId: number = Object.values(currentUserArray[0])[1],
   ): Promise<void> {
     await userRepository.updateUserCards(card, userId);
   }
 
   async getUserCards(
-    userId: any = Object.values(currentUserArray[0])[1],
+    userId: number = Object.values(currentUserArray[0])[1],
   ): Promise<number> {
-    const result = await userRepository.getUserCards(userId);
+    const result = await userRepository.getUserCards(String(userId));
     return result;
   }
 }

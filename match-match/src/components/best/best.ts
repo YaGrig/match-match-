@@ -2,6 +2,7 @@ import './best.scss';
 import { BaseComponent } from '../base-component';
 import { router } from '../../router';
 import { UserService } from '../../services/user-service/user-service';
+import { UserData } from '../../services/user-service/user-repository';
 
 const userService = new UserService();
 
@@ -22,9 +23,9 @@ export class Best extends BaseComponent {
     this.element.appendChild(mainDiv);
     const bestPage = this.element.querySelector('.bestPage');
     const array = await userService.getTopPlayers();
-    array.sort((a: any, b: any) => {
-      if (a > b) return -1;
-      if (b > a) return 1;
+    array.sort((a: UserData, b: UserData) => {
+      if (a.score > b.score) return -1;
+      if (b.score > a.score) return 1;
       return 0;
     });
     for (let i = 0; i < 10; i++) {

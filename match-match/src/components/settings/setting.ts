@@ -73,7 +73,6 @@ export class Settings extends BaseComponent {
       '.selectCards',
     ) as HTMLSelectElement;
     const selectedOption = chosenCard.selectedIndex;
-    console.log(selectedOption);
     return selectedOption;
   }
 

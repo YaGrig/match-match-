@@ -61,9 +61,9 @@ export class Form extends BaseComponent {
 
   formSubmit():boolean {
     let validated = 'false';
-    const fname: any = document.getElementById('fname');
-    const lname: any = document.getElementById('lname');
-    const email: any = document.getElementById('email');
+    const fname = document.getElementById('fname') as HTMLInputElement;
+    const lname = document.getElementById('lname') as HTMLInputElement;
+    const email = document.getElementById('email') as HTMLInputElement;
     if (!fname?.value.match('[a-zA-ZA-zА-я0-9]+')) {
       fname.classList.add('input-wrong');
     }

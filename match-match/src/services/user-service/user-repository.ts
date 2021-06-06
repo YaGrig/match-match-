@@ -1,5 +1,21 @@
 import { User } from '../../models/user';
 
+export interface UserData {
+  firstname:string;
+
+  lastname:string;
+
+  email:string;
+
+  score:number;
+
+  id?:string;
+
+  diff:number;
+
+  card:number;
+}
+
 export class UserRepository {
   private readonly dbName = 'match-match';
 
@@ -15,10 +31,10 @@ export class UserRepository {
     this.players = [];
     const openRequest = indexedDB.open(this.dbName);
     openRequest.onsuccess = (event) => {
-      this.db = (event.target as any).result;
+      this.db = (event.target as IDBRequest).result;
     };
     openRequest.onupgradeneeded = (event) => {
-      const db = (event.target as any).result;
+      const db = (event.target as IDBRequest).result;
 
       if (!db.objectStoreNames.contains(this.storeName)) {
         const store = db.createObjectStore(this.storeName, { keyPath: 'id' });
@@ -49,8 +65,8 @@ export class UserRepository {
     });
   }
 
-  GetAllPlayers(): Promise<Array<string>> {
-    return new Promise((res, rej) => {
+  GetAllPlayers(): Promise<Array<UserData>> {
+    return new Promise((res) => {
       const transaction = this.db?.transaction(this.storeName, 'readwrite');
       const users = transaction?.objectStore(this.storeName);
       if (users) {
@@ -67,7 +83,7 @@ export class UserRepository {
     const users = transaction?.objectStore(this.storeName);
     if (users) {
       const request = users.openCursor();
-      request.onsuccess = function () {
+      request.onsuccess = function result() {
         const cursor = request.result;
         if (cursor) {
           const { key } = cursor;
@@ -88,7 +104,7 @@ export class UserRepository {
     const users = transaction?.objectStore(this.storeName);
     if (users) {
       const request = users.openCursor();
-      request.onsuccess = function () {
+      request.onsuccess = function result() {
         const cursor = request.result;
         if (cursor) {
           const { key } = cursor;
@@ -104,12 +120,12 @@ export class UserRepository {
     }
   }
 
-  updateUserCards(card: number, userId: any): void {
+  updateUserCards(card: number, userId: number): void {
     const transaction = this.db?.transaction(this.storeName, 'readwrite');
     const users = transaction?.objectStore(this.storeName);
     if (users) {
       const request = users.openCursor();
-      request.onsuccess = function () {
+      request.onsuccess = function result() {
         const cursor = request.result;
         if (cursor) {
           const { key } = cursor;
@@ -126,7 +142,7 @@ export class UserRepository {
   }
 
   getUserDiff(userId: string): Promise<number> {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       const transaction = this.db?.transaction(this.storeName, 'readwrite');
       const users = transaction?.objectStore(this.storeName);
       if (users) {
@@ -141,7 +157,7 @@ export class UserRepository {
   }
 
   getUserCards(userId: string): Promise<number> {
-    return new Promise((res, rej) => {
+    return new Promise((res) => {
       const transaction = this.db?.transaction(this.storeName, 'readwrite');
       const users = transaction?.objectStore(this.storeName);
       if (users) {
